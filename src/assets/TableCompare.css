@@ -1,0 +1,11 @@
+#tblcompare > table  {
+    border-collapse: collapse;
+  }
+  
+  #tblcompare > th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+  #tblcompare >  thead th {
+    width: 25%;
+  }

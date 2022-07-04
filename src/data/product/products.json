@@ -1,0 +1,234 @@
+[
+  { "new" : 
+    [
+            {
+            "id": "1",
+            "image": "../../assets/img/2.jpg",
+            "imageList":[
+                "../../assets/img/imgproductdetail1.jpg",
+                "../../assets/img/imgproductdetail2.jpg",
+                "../../assets/img/imgproductdetail3.jpg",
+                "../../assets/img/imgproductdetail4.jpg",
+                "../../assets/img/imgproductdetail5.jpg"
+            ],
+            "productTitle": "Lorem ipsum black three new 1",
+            "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+            "productPrice": "650",
+            "productPriceLast": "350",
+            "productRating":4,
+            "discount":10,
+            "new":true
+            },
+            {
+                "id": "2",
+                "image": "../../assets/img/2.jpg",
+                "imageList":[
+                    "../../assets/img/imgproductdetail1.jpg",
+                    "../../assets/img/imgproductdetail2.jpg",
+                    "../../assets/img/imgproductdetail3.jpg",
+                    "../../assets/img/imgproductdetail4.jpg",
+                    "../../assets/img/imgproductdetail5.jpg"
+                ],
+                "productTitle": "Lorem ipsum black three new 2",
+                "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                "productPrice": "650",
+                "productPriceLast": "350",
+                "productRating":5,
+                "discount":10,
+                 "new":true
+            },
+            {
+                "id": "3",
+                "image": "../../assets/img/2.jpg",
+                "imageList":[
+                    "../../assets/img/imgproductdetail1.jpg",
+                    "../../assets/img/imgproductdetail2.jpg",
+                    "../../assets/img/imgproductdetail3.jpg",
+                    "../../assets/img/imgproductdetail4.jpg",
+                    "../../assets/img/imgproductdetail5.jpg"
+                ],
+                "productTitle": "Lorem ipsum black three new 3",
+                "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                "productPrice": "650",
+                "productPriceLast": "350",
+                "productRating":3,
+                "discount":10,
+                "new":true
+            },
+            {
+                "id": "4",
+                "image": "../../assets/img/2.jpg",
+                "imageList":[
+                    "../../assets/img/imgproductdetail1.jpg",
+                    "../../assets/img/imgproductdetail2.jpg",
+                    "../../assets/img/imgproductdetail3.jpg",
+                    "../../assets/img/imgproductdetail4.jpg",
+                    "../../assets/img/imgproductdetail5.jpg"
+                ],
+                "productTitle": "Lorem ipsum black three new 4",
+                "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                "productPrice": "650",
+                "productPriceLast": "350",
+                "productRating":4,
+                "discount":10,
+                "new":true
+                
+            }
+        ]
+    },
+    {"best" : 
+        [
+                {
+                "id": "5",
+                "image": "../../assets/img/2.jpg",
+                "imageList":[
+                    "../../assets/img/imgproductdetail1.jpg",
+                    "../../assets/img/imgproductdetail2.jpg",
+                    "../../assets/img/imgproductdetail3.jpg",
+                    "../../assets/img/imgproductdetail4.jpg",
+                    "../../assets/img/imgproductdetail5.jpg"
+                ],
+                "productTitle": "Lorem ipsum black three best 5",
+                "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                "productPrice": "650",
+                "productPriceLast": "350",
+                "productRating":4,
+                "discount":0,
+                "new":false
+                },
+                {
+                    "id": "6",
+                    "image": "../../assets/img/2.jpg",
+                    "imageList":[
+                        "../../assets/img/imgproductdetail1.jpg",
+                        "../../assets/img/imgproductdetail2.jpg",
+                        "../../assets/img/imgproductdetail3.jpg",
+                        "../../assets/img/imgproductdetail4.jpg",
+                        "../../assets/img/imgproductdetail5.jpg"
+                    ],
+                    "productTitle": "Lorem ipsum black three best 6",
+                    "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                    "productPrice": "650",
+                    "productPriceLast": "350",
+                    "productRating":4,
+                    "discount":0,
+                    "new":false
+                    },
+                {
+                    "id": "7",
+                    "image": "../../assets/img/2.jpg",
+                    "imageList":[
+                        "../../assets/img/imgproductdetail1.jpg",
+                        "../../assets/img/imgproductdetail2.jpg",
+                        "../../assets/img/imgproductdetail3.jpg",
+                        "../../assets/img/imgproductdetail4.jpg",
+                        "../../assets/img/imgproductdetail5.jpg"
+                    ],
+                    "productTitle": "Lorem ipsum black three best 7",
+                    "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                    "productPrice": "650",
+                    "productPriceLast": "350",
+                    "productRating":5,
+                    "discount":0,
+                    "new":false
+                    
+                },
+                {
+                    "id": "8",
+                    "image": "../../assets/img/2.jpg",
+                    "imageList":[
+                        "../../assets/img/imgproductdetail1.jpg",
+                        "../../assets/img/imgproductdetail2.jpg",
+                        "../../assets/img/imgproductdetail3.jpg",
+                        "../../assets/img/imgproductdetail4.jpg",
+                        "../../assets/img/imgproductdetail5.jpg"
+                    ],
+                    "productTitle": "Lorem ipsum black three best 8",
+                    "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                    "productPrice": "650",
+                    "productPriceLast": "350",
+                    "productRating":5,
+                    "discount":0,
+                     "new":false
+                }
+        ]
+    },
+    {"sale" : 
+        [
+                {
+                "id": "9",
+                "image": "../../assets/img/2.jpg",
+                "imageList":[
+                    "../../assets/img/imgproductdetail1.jpg",
+                    "../../assets/img/imgproductdetail2.jpg",
+                    "../../assets/img/imgproductdetail3.jpg",
+                    "../../assets/img/imgproductdetail4.jpg",
+                    "../../assets/img/imgproductdetail5.jpg"
+                ],
+                "productTitle": "Lorem ipsum black three sale 9",
+                "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                "productPrice": "650",
+                "productPriceLast": "350",
+                "productRating":3 , 
+                "discount":0,
+                "new":false
+                },
+                {
+                    "id": "10",
+                    "image": "../../assets/img/2.jpg",
+                    "imageList":[
+                        "../../assets/img/imgproductdetail1.jpg",
+                        "../../assets/img/imgproductdetail2.jpg",
+                        "../../assets/img/imgproductdetail3.jpg",
+                        "../../assets/img/imgproductdetail4.jpg",
+                        "../../assets/img/imgproductdetail5.jpg"
+                    ],
+                    "productTitle": "Lorem ipsum black three sale 10",
+                    "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                    "productPrice": "650",
+                    "productPriceLast": "350",
+                    "productRating":4 , 
+                    "discount":0,
+                     "new":false
+                },
+                {
+                    "id": "11",
+                    "image": "../../assets/img/2.jpg",
+                    "imageList":[
+                        "../../assets/img/imgproductdetail1.jpg",
+                        "../../assets/img/imgproductdetail2.jpg",
+                        "../../assets/img/imgproductdetail3.jpg",
+                        "../../assets/img/imgproductdetail4.jpg",
+                        "../../assets/img/imgproductdetail5.jpg"
+                    ],
+                    "productTitle": "Lorem ipsum black three sale 11",
+                    "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                    "productPrice": "650",
+                    "productPriceLast": "350",
+                    "productRating":5 , 
+                    "discount":0,
+                    "new":false
+                },
+                {
+                    "id": "12",
+                    "image": "../../assets/img/2.jpg",
+                    "imageList":[
+                        "../../assets/img/imgproductdetail1.jpg",
+                        "../../assets/img/imgproductdetail2.jpg",
+                        "../../assets/img/imgproductdetail3.jpg",
+                        "../../assets/img/imgproductdetail4.jpg",
+                        "../../assets/img/imgproductdetail5.jpg"
+                    ],
+                    "productTitle": "Lorem ipsum black three sale 12",
+                    "productDes":"Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+                    "productPrice": "650",
+                    "productPriceLast": "350",
+                    "productRating":3,
+                    "discount":0,
+                    "new":false
+                }
+        ]
+    }
+    
+  ]
+  
