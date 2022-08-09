@@ -1,7 +1,6 @@
-import React , {useContext , useEffect} from 'react'
-import {emphasize, styled } from '@mui/material/styles';
+import React  from 'react'
+import {styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
-import DataContext from '../../context/DataContext';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -19,15 +18,11 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import { Stack } from '@mui/material';
 
-const TableCart = ({alignment ,setAlignment}) => {
 
-    //console.log(pCart)
-    const {listCartProduct , setListCartProduct  , setTotalPrice} = useContext(DataContext);
+const TableCart = ({listCartProduct , setListCartProduct ,  alignment ,setAlignment}) => {
 
     //console.log(listCartProduct)
-    let sumPrice = 0;
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: "#030f27",
@@ -51,14 +46,8 @@ const TableCart = ({alignment ,setAlignment}) => {
         
       };
 
-      const handleProfileMenuOpen = () => {
+     const handleDelQty = (id) => {
 
-      }
-
-      const handleDelQty = (id) => {
-
-            let newReData;
-           
             const newData = listCartProduct.map((product , index) => {
 
                 if(product.prdId === id) {
@@ -105,24 +94,12 @@ const TableCart = ({alignment ,setAlignment}) => {
 
      }
 
-     useEffect(() => {
-
-        setTotalPrice(sumPrice)
-        console.log('ininin')
-
-     },[listCartProduct])
-
-
      const clearCart = () => {
 
             setListCartProduct([]);
      }
      
-     
-
-      
-
-  return (
+return (
             <Grid container spacing={1} sx={{mt:5}}>
                 <Grid item xs={12}>
                 <TableContainer component={Container}>
@@ -144,15 +121,13 @@ const TableCart = ({alignment ,setAlignment}) => {
 
                             listCartProduct.map((row , index) => {
 
-                                 sumPrice += (parseInt(row.prdPriceLast) * parseInt(row.qty));
-
                                  return (<TableRow
                                             key={index}
                                             sx={{backgroundColor:"#fff"}}
                                             /*sx={{ '&:last-child td, &:last-child th': { border: 0 } }}*/
                                         >
                                             <TableCell component="th" scope="row">
-                                                <img src="../../assets/img/7.jpg" style={{maxWidth:"108px"}} loading="lazy" />
+                                                <img src="../../assets/img/7.jpg" style={{maxWidth:"108px"}} loading="lazy" alt="img default" />
                                             </TableCell>
                                             <TableCell align="center">{row.prdTitle}</TableCell>
                                             <TableCell align="center"><span style={{textDecoration:"line-through" , fontSize:"22px", marginRight:"10px" ,color:"#e90042"}}>{row.prdPrice}</span><span>{row.prdPriceLast}</span> </TableCell>

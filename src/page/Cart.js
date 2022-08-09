@@ -1,70 +1,81 @@
-import React , {useContext , useState , useEffect} from 'react'
-import { ThemeProvider} from '@mui/material/styles';
+import React , {useContext , useState , useEffect} from 'react';
+import MainBlock from '../wrappers/MainBlock/MainBlock';
 import DataContext from '../context/DataContext'
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import useMediaQuery from '@mui/material/useMediaQuery';
-import HeaderOther from '../layout/HeaderOther';
-import HeaderOtherPage from '../layout/HeaderOtherPage';
-import BreadCrumbPage from '../component/Breadcrumbs/BreadCrumbPage';
 import TableCart from '../component/Table/TableCart';
 import CardShipping from '../component/Card/CardShipping';
-import FooterOther from '../layout/FooterOther';
-
+import endpoint from '../api/endpoint';
 
 const Cart = () => {
 
-    const {theme , styles , toggleDrawer , menuBar , listCartProduct} = useContext(DataContext)
-    const [anchorEl, setAnchorEl] = useState(null);
-    const handleClick = (event) => {
-        console.log(event.currentTarget);
-        setAnchorEl(event.currentTarget);
-      };
-      const handleClose = () => {
-          setAnchorEl(null);
-      };
-    
+    const { userLogin
+          , setPrvUrl
+          , listCartProduct 
+          , listCheckout
+          , setListCheckout
+          , setListCartProduct
+        } = useContext(DataContext);
+    const [supDefault , seSupDefault] = useState({}); 
     const [alignment, setAlignment] = useState(null);
 
-    const open = Boolean(anchorEl);
+   const reqSupply = async () => {
+    
+      try {
 
-    const id = open ? 'simple-popover' : undefined;
-
-    const ScreenXl = useMediaQuery('(min-width:1537px)');
-
-    const MobileDetact = useMediaQuery('(min-width:1537px)');
-
-    //console.log(window.screen.availWidth)
-    const [ship, setShip] = useState('');
-
-    const handleChangedata = (event) => {
-        setShip(event.target.value);
-    };
+            const response  = await endpoint.patch(`/supply/${listCheckout === null ? 1 : listCheckout.deliver.supID}`);
+            console.log(response)
+            if(response.data.code === 1){
+                seSupDefault({supID : response.data.list.id , supName : response.data.list.supplyname , supPrice : parseInt(response.data.list.supplyprice)})
+            }
+            
+          } catch (error) {
+            
+            console.error(error);
+          }
+    }
 
     useEffect(() => {
 
-      localStorage.setItem('cartproduct', JSON.stringify(listCartProduct));
+       let signal  = true;
+       if(signal){
+            localStorage.setItem('cartproduct', JSON.stringify(listCartProduct));
+       }
+      return () => {
+         signal = false;
+    };
 
     },[listCartProduct])
 
-  return (
-    <ThemeProvider theme={theme}>
-       <Grid
-        sx={{ flexGrow: 1 , m:-1 ,pt:0}}
-      >
-        <HeaderOther/>
-          <Box sx={{ flexGrow: 1  , mt:0 , backgroundColor:"#f5f5f5"}}>
-                    
-              <HeaderOtherPage ScreenXl={ScreenXl} id={id} open={open} anchorEl ={anchorEl} handleClose={handleClose} handleClick={handleClick} menuBar={menuBar} toggleDrawer={toggleDrawer} />
-              <BreadCrumbPage pagename={"ตระกร้าสินค้า"} />
-              <TableCart alignment={alignment} setAlignment={() => setAlignment}/>
-              <CardShipping data={ship} handleChangedata={handleChangedata} />
-                      
-          </Box>
-        <FooterOther bgStyle={styles.bgFooter} />
-      </Grid>
-     </ThemeProvider>
-  )
+    useEffect(() => {
+
+      let signal  = true;
+
+      if(signal){
+          reqSupply();
+          localStorage.setItem('checkout', JSON.stringify(listCheckout));
+      }
+      return () => {
+          signal = false;
+      };
+
+     },[listCheckout])
+
+
+
+  return (<MainBlock titlepage={"ตระกร้าสินค้า"}>
+            <TableCart 
+                    listCartProduct={listCartProduct} 
+                    setListCartProduct={setListCartProduct} 
+                    alignment={alignment} 
+                    setAlignment={() => setAlignment}/>
+              <CardShipping 
+                    userLogin={userLogin} 
+                    setPrvUrl={setPrvUrl} 
+                    listCartProduct={listCartProduct} 
+                    listCheckout={listCheckout} 
+                    setListCheckout={setListCheckout} 
+                    supDefault={supDefault} /> 
+        </MainBlock>
+      )
 }
 
 export default Cart

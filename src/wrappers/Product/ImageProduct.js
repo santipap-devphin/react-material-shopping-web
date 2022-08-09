@@ -1,11 +1,11 @@
-import React , { Fragment, useState , useEffect , useContext } from 'react';
+import React , { Fragment, useState , useEffect } from 'react';
 import {
     LightgalleryProvider,
     LightgalleryItem,
     useLightgallery
   } from "react-lightgallery";
 import { Swiper, SwiperSlide } from "swiper/react";
-import DataContext from '../../context/DataContext';
+
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import {Container , Stack,  Box ,Typography ,Button ,IconButton , Grid , Divider } from "@mui/material";
 import ZoomInMapIcon from '@mui/icons-material/ZoomInMap';
@@ -17,11 +17,9 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
-  const ImageProduct = ({product}) => {
+  const ImageProduct = ({listCartProduct , setListCartProduct , product}) => {
 
   const [alignment, setAlignment] = useState(null);
-
-  const {listCartProduct , setListCartProduct} = useContext(DataContext);
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
@@ -45,9 +43,6 @@ import Snackbar from '@mui/material/Snackbar';
 
   useEffect(() => {
 
-    console.log(listCartProduct);
-
-    
     if(listCartProduct === null) return;
     const checkQty = listCartProduct.find(list => list.prdId === product.id);
     if(checkQty === undefined){
@@ -138,6 +133,11 @@ import Snackbar from '@mui/material/Snackbar';
          }
 
           setListCartProduct([...listCartProduct , newsProduct]);
+          settextMsg(`คุณได้เพิ่มสินค้า ${product.productTitle} ลงไปในตระกร้า`)
+          setStatuss('success');
+          setOpenAlert(true);
+          setTimeout(function() { setOpenAlert(false); }, 2000);
+
 
       }else{
 
@@ -156,9 +156,10 @@ import Snackbar from '@mui/material/Snackbar';
         //console.log(reMapData)
 
         setListCartProduct(reMapData);
-        settextMsg(`คุณได้เพิ่มสินค้า ${product.productTitle} ลงไปในตระกร้า`)
-        setStatuss('success');
-        setOpenAlert(true)
+        settextMsg(`คุณได้เพิ่มสินค้า ${product.productTitle} ลงไปแล้ว`)
+        setStatuss('warning');
+        setOpenAlert(true);
+        setTimeout(function() { setOpenAlert(false); }, 2000);
        }
 
     }

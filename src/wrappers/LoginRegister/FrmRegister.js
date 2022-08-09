@@ -1,19 +1,28 @@
 import React , {useState , useEffect} from 'react';
 import { Stack , Box , TextField , IconButton , InputAdornment , Button  , Grid } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import KeyIcon from '@mui/icons-material/Key';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import endpoint from '../../api/endpoint';
 import SweetAlertCustom from '../../component/SweetAlert/SweetAlertCustom';
+import { useSocket , socketEmit } from '../../hook/useSocket';
+import {format} from 'date-fns';
 
 const FrmRegister = ({setValue}) => {
 
     const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
     const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
     const EMAIL_REGEX = /^\S+@\S+\.\S+$/;
+    const addZero = (data) => {
+        if(data < 10){
+             return "0"+data;
+        }
+        return data;
+
+    }
+    const {socket , statusConnect} = useSocket();
 
     const [swalProps, setSwalProps] = useState({});
     
@@ -32,13 +41,25 @@ const FrmRegister = ({setValue}) => {
 
     const [clkShowPass , setClkShowPass] = useState(false);
     const [clkShowConPass , setClkShowConPass] = useState(false);
+    var fdate = new Date();
+    var year = fdate.getFullYear();
+    var months = Number(fdate.getMonth())+1;
+    var days = fdate.getDate();
+    var times   = addZero(fdate.getHours())+":"+addZero(fdate.getMinutes())+":"+addZero(fdate.getSeconds());
+    var fulldate = year+addZero(months)+ addZero(days) +"_"+times;
+
+  
 
     const onSubmitRegister = async (e) => {
             e.preventDefault();
             setStatusRegister(false);
+
+            if(!statusConnect) return {error: "socket not connect"}
+            
             if(txtUser && txtPass && txtConfirmPass && txtEmail){
 
                 console.log(txtUser , txtPass)
+
                 const response = await endpoint.post("/userregister" , {username:txtUser , password:txtPass , email:txtEmail});
 
                 if(response.data.code === 1){
@@ -51,6 +72,10 @@ const FrmRegister = ({setValue}) => {
                         showCancelButton: false,
                         confirmButtonText:"OK",
                         cancelButtonText:"Cancel"});
+                        
+                        const datetime = format(new Date() , 'MMMM dd ,yyyy pp');
+
+                        socketEmit('register-new-member' , {userID:response.data.userid,username:txtUser,msg:"สวัสดีครับ ยินดีให้บริการครับ" , date:fulldate , regisDate:datetime})
 
                         setTimeout(function(){ setSwalProps({...swalProps , show:false});}, 2000);
 
@@ -126,6 +151,10 @@ const FrmRegister = ({setValue}) => {
             
 
     },[statusRegister])
+
+    useEffect(()=> {
+       if(!statusConnect) return {error:"socket notconnect"}
+    },[socket,statusConnect])
 
   return (
     <Grid container spacing={2} sx={{mt:1}} justifyContent="center" alignItems="center">

@@ -5,10 +5,11 @@ import useAuth from '../../hook/useAuth';
 import useRefreshToken from '../../hook/useRefreshToken';
 import { Link , useNavigate } from 'react-router-dom';
 import endpoint from '../../api/endpoint';
-import { Stack , Box  , TextField  , InputAdornment , Button  , Grid , FormGroup , FormControlLabel , Checkbox  } from '@mui/material';
+import { Stack , Box  , TextField  , InputAdornment , Button  , Grid , FormGroup , FormControlLabel , Checkbox , CircularProgress  } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 import SweetAlert2 from 'react-sweetalert2';
+import DialogAlert from '../../component/Dialog/DialogAlert';
 
 const FrmLogin = () => {
 
@@ -18,10 +19,9 @@ const FrmLogin = () => {
   const [swalProps, setSwalProps] = useState({});
   const axiosPrivate = useAxiosPrivate();
   const refreshs = useRefreshToken();
-
-  const {userLogin , setUserLogin} = useContext(DataContext);
+  const [openModal , setOpenModal] = useState(false);
+  const {userLogin , setUserLogin , prvUrl , setPrvUrl , listCheckout , setListCheckout } = useContext(DataContext);
   
-
   const {auth , setAuth} = useAuth(); 
 
   let navicate = useNavigate();
@@ -32,7 +32,7 @@ const FrmLogin = () => {
 
     if(user && pass){
 
-        setSwalProps({show: false});
+        //setSwalProps({show: false});
 
         console.log(user , pass, 'send to server')
 
@@ -46,28 +46,49 @@ const FrmLogin = () => {
 
         if(response.data.code === 1){
 
+            setOpenModal(true);
 
-            setSwalProps({
-                show: true,
-                title: 'ข้อมูลถูกต้อง',
-                text: 'กด ยืนยันในการเข้าสู่ระบบ',
-                icon:"success",
-                confirmButtonText: 'ยืนยัน'
-            });
-            setTimeout(function(){ setSwalProps({...swalProps , show:false});}, 1000);    
+            console.log(response.data)
+            /*setSwalProps({
+                    show: true,
+                    title: 'ข้อมูลถูกต้อง',
+                    text: 'กด ยืนยันในการเข้าสู่ระบบ',
+                    icon:"success",
+                    confirmButtonText: 'ยืนยัน'
+                });*/
+            setTimeout(function(){ /*setSwalProps({...swalProps , show:false});*/ setOpenModal(false)}, 1000);    
 
-            setErrMsg({...errMsg , code:1})
-            setErrMsg({...errMsg , msg:"เข้าสู่ระบบสำเร็จ"})
-            setErrMsg({...errMsg , statusActive:true})
+            setErrMsg({...errMsg , code:1 , msg:"เข้าสู่ระบบสำเร็จ" , statusActive:true})
+           // setErrMsg({...errMsg , msg:"เข้าสู่ระบบสำเร็จ"})
+            //setErrMsg({...errMsg , statusActive:true})
 
             setTimeout(function(){ 
-                setUserLogin({username:response.data.users , roles:response.data.roles , accessToken:response.data.accessToken}) 
+                setUserLogin({id:response.data.userid,username:response.data.users , roles:response.data.roles , accessToken:response.data.accessToken})
                 setAuth({username:response.data.users , accessToken : response.data.accessToken})
-            }, 2000);
-           
-            
 
-            //navicate("/");
+                if(listCheckout !== null){
+                    if(listCheckout["userID"] !== Number(response.data.userid)){
+
+                        setListCheckout(null);
+                        localStorage.removeItem("checkout");
+
+                    }
+                    
+                }
+
+            }, 2000);
+
+            setTimeout(function(){ 
+                if(prvUrl === "cart"){
+
+                    setPrvUrl('');
+                    navicate("/cart");
+                }else{
+        
+                    navicate("/address");
+                }
+            }, 2500);
+           
         }
         else if(response.data.code === 2){
 
@@ -79,9 +100,9 @@ const FrmLogin = () => {
                 icon:"error",
                 confirmButtonText: 'Close'
             });
-            setErrMsg({...errMsg , code:2})
-            setErrMsg({...errMsg , msg:"ไม่มี Username นี้ในระบบ"})
-            setErrMsg({...errMsg , statusActive:false})
+            setErrMsg({...errMsg , code:2  , msg:"ไม่มี Username นี้ในระบบ" , statusActive:false})
+            //setErrMsg({...errMsg , msg:"ไม่มี Username นี้ในระบบ"})
+            //setErrMsg({...errMsg , statusActive:false})
             //navicate("/");
         }
         if(response.data.code === 3){
@@ -94,9 +115,9 @@ const FrmLogin = () => {
                 icon:"error",
                 confirmButtonText: 'Close'
             });
-            setErrMsg({...errMsg , code:3})
-            setErrMsg({...errMsg , msg:"รหัสผ่านของคุณไม่ถูกต้อง"})
-            setErrMsg({...errMsg , statusActive:false})
+            setErrMsg({...errMsg , code:3 , msg:"รหัสผ่านของคุณไม่ถูกต้อง" , statusActive:false})
+            //setErrMsg({...errMsg , msg:"รหัสผ่านของคุณไม่ถูกต้อง"})
+            //setErrMsg({...errMsg , statusActive:false})
 
             //navicate("/");
         }
@@ -141,9 +162,18 @@ const FrmLogin = () => {
 
     let isApiSubscribed = true;
 
-    if(userLogin !== null){
+    if(userLogin !== null && isApiSubscribed){
 
-        navicate("/address");
+        if(prvUrl === "cart"){
+
+            setPrvUrl('');
+            navicate("/cart");
+        }else{
+
+            navicate("/address");
+        }
+
+        
      }
 
      return () => {
@@ -169,14 +199,23 @@ const FrmLogin = () => {
                                 
                                  if(result.isConfirmed === true){
 
-                                    if(swalProps.icon === "success"){
-                                            navicate("/address");
-                                    }
+                                    /*if(swalProps.icon === "success"){
+                                            if(prvUrl === "cart"){
+                                                navicate("/cart");
+                                            }else{
+                                                navicate("/address");
+                                            }
+                                            
+                                    }*/
 
                                  }
                             }}
                  /> 
-                 
+                 <DialogAlert open={openModal} setOpen={setOpenModal}  title="กรุณารอสักครู่ .......">
+                          <Stack sx={{alignItems:"center"}}>
+                                <CircularProgress disableShrink />
+                          </Stack>   
+                 </DialogAlert>
                 <form onSubmit={frmLoginSubmit}>
                    <Stack spacing={2}>
                         

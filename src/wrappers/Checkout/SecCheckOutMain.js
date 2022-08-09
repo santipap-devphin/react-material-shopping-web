@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container ,Grid, Box} from '@mui/material';
+import {Container} from '@mui/material';
 import SecCheckOut from './SecCheckOut';
 
 const SecCheckOutMain = () => {

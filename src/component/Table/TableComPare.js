@@ -1,30 +1,24 @@
-import React , {useState , useContext , useEffect} from 'react';
-import DataContext from '../../context/DataContext';
+import React , {useState , useEffect} from 'react';
 import styled  from "styled-components";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import Rating from '@mui/material/Rating';
 import Box from "@mui/material/Box";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import StarIcon from '@mui/icons-material/Star';
-import Typography from "@mui/material/Typography";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 
-const TableComPare = () => {
+const TableComPare = ({listCompare , setListCompare}) => {
 
-    const {listCompare , setListCompare} = useContext(DataContext);
-
-    const [value, setValue] = useState(2);
+    /*const [value, setValue] = useState(2);
 
     const [rowObj , setRowObj] = useState({ rowAction:[] ,
                                             rowProduct:[],
                                             rowPrice:[],
                                             rowDes:[],
-                                            rowRating:[]});
+                                            rowRating:[]});*/
 
      const Alert = React.forwardRef(function Alert(props, ref) {
           return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -127,8 +121,6 @@ const TableComPare = () => {
         setOpenAlert(false)
     }
 
-    
-
   return (  <Box sx={ ScreenTh ? { flexGrow: 1 , m:2 , backgroundColor:"#fff" , boxShadow: "0 0px 15px 0px rgb(0 0 0 / 15%)", transformStyle: "preserve-3d" } : { flexGrow: 1 , m:10 , backgroundColor:"#fff" , boxShadow: "0 0px 15px 0px rgb(0 0 0 / 15%)", transformStyle: "preserve-3d" }}>
             {
                 loadCom ? 
@@ -175,7 +167,7 @@ const TableComPare = () => {
 
                                         listCompare.map((item ,index) => {
 
-                                            return (<td key={`Product${index}`} style={{color:"#252531"}}><img src={item.prdImage} style={ScreenTh ? {width:"150px"} : {width:"292px"}} /> <p>{item.prdTitle}</p></td>)
+                                            return (<td key={`Product${index}`} style={{color:"#252531"}}><img src={item.prdImage} style={ScreenTh ? {width:"150px"} : {width:"292px"}} alt={`รูปภาพสินค้า ${index}`} /> <p>{item.prdTitle}</p></td>)
 
                                         })
 

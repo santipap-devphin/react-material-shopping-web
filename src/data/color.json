@@ -1,0 +1,78 @@
+[
+    {
+        "id":1 ,
+        "colorname":"แดง"
+    },
+    {
+        "id":2 ,
+        "colorname":"ส้ม"
+    },
+    {
+        "id":3 ,
+        "colorname":"เหลือง"
+    },
+    {
+        "id":4 ,
+        "colorname":"เขียว"
+    }
+    ,{
+        "id":5 ,
+        "colorname":"น้ำเงิน"
+    }
+    ,{
+        "id":6 ,
+        "colorname":"ม่วง"
+    }
+    ,{
+        "id":7 ,
+        "colorname":"ฟ้า"
+    }
+    ,{
+        "id":8 ,
+        "colorname":"ขาว"
+    }
+    ,{
+        "id":9 ,
+        "colorname":"ดำ"
+    }
+    ,{
+        "id":10 ,
+        "colorname":"ชมพู"
+    }
+    ,{
+        "id":11 ,
+        "colorname":"เทา"
+    }
+    ,{
+        "id":12 ,
+        "colorname":"ทอง"
+    }
+    ,{
+        "id":13 ,
+        "colorname":"น้ำตาล"
+    }
+    ,{
+        "id":14 ,
+        "colorname":"แสด"
+    }
+    ,{
+        "id":15 ,
+        "colorname":"กรม"
+    }
+    ,{
+        "id":16 ,
+        "colorname":"เขียวอ่อน"
+    }
+    ,{
+        "id":17 ,
+        "colorname":"เลือดหมู"
+    }
+    ,{
+        "id":18 ,
+        "colorname":"เงิน"
+    }
+    ,{
+        "id":19 ,
+        "colorname":""
+    }
+]

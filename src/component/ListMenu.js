@@ -6,16 +6,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import Divider from '@mui/material/Divider';
-import ShuffleIcon from '@mui/icons-material/Shuffle';
-import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import RssFeedIcon from '@mui/icons-material/RssFeed';
 import LoginIcon from '@mui/icons-material/Login';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import DiscountIcon from '@mui/icons-material/Discount';
 
 const ListMenu = ({toggleDrawer , anchor , device}) => {
   return (
@@ -31,7 +29,7 @@ const ListMenu = ({toggleDrawer , anchor , device}) => {
                                 <ListItemIcon>
                                     <HomeIcon sx={{color:"#000"}} />
                                 </ListItemIcon>
-                                <ListItemText primary={"Home"} sx={{color:"#000"}} />
+                                <ListItemText primary={"หน้าแรก"} sx={{color:"#000"}} />
                             </ListItem>
                         </Link>
                         <Link to={'/shop'} style={{ textDecoration: 'none' }}>
@@ -39,39 +37,23 @@ const ListMenu = ({toggleDrawer , anchor , device}) => {
                                 <ListItemIcon>
                                     <ShoppingBagIcon sx={{color:"#000"}} />
                                 </ListItemIcon>
-                                <ListItemText primary={"shop"} sx={{color:"#000"}} />
+                                <ListItemText primary={"สินค้า"} sx={{color:"#000"}} />
                             </ListItem>
                         </Link>
-                        <Link to={'/wishlist'} style={{ textDecoration: 'none' }}>
+                        <Link to={'/promotion'} style={{ textDecoration: 'none' }}>
                             <ListItem button>
                                 <ListItemIcon>
-                                    <FavoriteBorderIcon sx={{color:"#000"}} />
+                                    <DiscountIcon sx={{color:"#000"}} />
                                 </ListItemIcon>
-                                <ListItemText primary={"WishList"} sx={{color:"#000"}} />
+                                <ListItemText primary={"โปรโมชั่น"} sx={{color:"#000"}} />
                             </ListItem>
                         </Link>
-                        <Link to={'/cart'} style={{ textDecoration: 'none' }}>
-                            <ListItem button>
-                                    <ListItemIcon>
-                                        <LocalGroceryStoreIcon sx={{color:"#000"}} />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"cart"} sx={{color:"#000"}} />
-                            </ListItem>
-                        </Link>
-                        <Link to={'/compare'} style={{ textDecoration: 'none' }}>
-                            <ListItem button>
-                                    <ListItemIcon>
-                                        <ShuffleIcon sx={{color:"#000"}} />
-                                    </ListItemIcon>
-                                    <ListItemText primary={"compare"} sx={{color:"#000"}} />
-                            </ListItem>
-                         </Link>
-                         <Link to={'/blog'} style={{ textDecoration: 'none' }}>
+                        <Link to={'/blog'} style={{ textDecoration: 'none' }}>
                             <ListItem button>
                                     <ListItemIcon>
                                         <RssFeedIcon sx={{color:"#000"}} />
                                     </ListItemIcon>
-                                <ListItemText primary={"blog"} sx={{color:"#000"}} />
+                                <ListItemText primary={"ข่าวสาร | บล๊อค"} sx={{color:"#000"}} />
                             </ListItem>
                          </Link>
                          <Link to={'/contact'} style={{ textDecoration: 'none' }}>
@@ -79,7 +61,7 @@ const ListMenu = ({toggleDrawer , anchor , device}) => {
                                     <ListItemIcon>
                                         <ContactsIcon sx={{color:"#000"}} />
                                     </ListItemIcon>
-                                <ListItemText primary={"contact"} sx={{color:"#000"}} />
+                                <ListItemText primary={"ติดต่อเรา"} sx={{color:"#000"}} />
                             </ListItem>
                          </Link>
                          {
@@ -90,7 +72,7 @@ const ListMenu = ({toggleDrawer , anchor , device}) => {
                                         <ListItemIcon>
                                             <LoginIcon sx={{color:"#000"}} />
                                         </ListItemIcon>
-                                    <ListItemText primary={"Login"} sx={{color:"#000"}} />
+                                    <ListItemText primary={"เข้าสู่ระบบ"} sx={{color:"#000"}} />
                                 </ListItem>
                             </Link>
                             <Link to={'/login-register'} style={{ textDecoration: 'none' }}>
@@ -98,7 +80,7 @@ const ListMenu = ({toggleDrawer , anchor , device}) => {
                                         <ListItemIcon>
                                             <HowToRegIcon sx={{color:"#000"}} />
                                         </ListItemIcon>
-                                    <ListItemText primary={"Register"} sx={{color:"#000"}} />
+                                    <ListItemText primary={"สมัครสมาชิก"} sx={{color:"#000"}} />
                                 </ListItem>
                             </Link>
                             </>

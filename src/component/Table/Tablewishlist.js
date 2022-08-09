@@ -1,7 +1,6 @@
-import React , {useContext , useState} from 'react';
+import React , {useState} from 'react';
 import { Link } from 'react-router-dom';
-import DataContext from '../../context/DataContext';
-import {emphasize, styled } from '@mui/material/styles';
+import {styled } from '@mui/material/styles';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -20,11 +19,9 @@ import MuiAlert from '@mui/material/Alert';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { color } from '@mui/system';
 
-const Tablewishlist = () => {
 
-    const {listWishList , setListWishList , listCartProduct , setListCartProduct} = useContext(DataContext);
+const Tablewishlist = ({listWishList , setListWishList , listCartProduct , setListCartProduct}) => {
 
     const [openAlert, setOpenAlert] = useState(false);
 
@@ -98,11 +95,8 @@ const Tablewishlist = () => {
             settextMsg(`คุณได้เพิ่มสินค้า ${obj.prdTitle} เรียบร้อย`);
 
         }
-        
-        //console.log(obj);
-
-
-        //setListCartProduct([obj]);
+         //console.log(obj);
+         //setListCartProduct([obj]);
 
     }
 
@@ -142,7 +136,7 @@ const Tablewishlist = () => {
                                 <TableRow key={list.prdId} sx={{backgroundColor:"#ffffff"}}
                                     /*sx={{ '&:last-child td, &:last-child th': { border: 0 } }}*/>
                                     <TableCell component="th" scope="row">
-                                        <img src="../../assets/img/7.jpg" style={{maxWidth:"108px"}} loading="lazy" />
+                                        <img src="../../assets/img/7.jpg" style={{maxWidth:"108px"}} loading="lazy" alt="img wishlist" />
                                     </TableCell>
                                     <TableCell align="center">{list.prdTitle}</TableCell>
                                     <TableCell align="center"><span style={{textDecoration:"line-through" , fontSize:"22px", marginRight:"10px" ,color:"#E81C2E"}}>{list.prdPrice}</span><span>{list.prdPriceLast}</span> </TableCell>

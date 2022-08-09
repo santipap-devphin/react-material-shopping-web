@@ -1,10 +1,11 @@
-import React , {useContext , useEffect, useState} from 'react';
+import React from 'react';
 import SweetAlert2 from 'react-sweetalert2';
-import DataContext from '../../context/DataContext';
+import { useNavigate } from 'react-router-dom';
+
 const SweetAlertCustom = ({swalProps , setSwalProps , setStatus = null}) => {
 
- const {userLogin , setUserLogin} = useContext(DataContext);
 
+  let navicate = useNavigate();
  
  /*const handleLogout = () => {
      ขั้นตอนการ update object กรณี ต้องการ show sweetalert
@@ -41,14 +42,22 @@ const SweetAlertCustom = ({swalProps , setSwalProps , setStatus = null}) => {
 
                 if(result.isConfirmed){
 
-                    setSwalProps({...swalProps , show:false })
+                    if(setStatus === "chklogin"){
+
+                        setSwalProps({...swalProps , show:false })
+                        setTimeout(function() {navicate("/login-register")}, 1000);
+
+                        
+
+                    }else{
+
+                        setSwalProps({...swalProps , show:false })
+                    }
+                    
+                    //console.log(setStatus)
 
                 }
-                
-                
-                
-
-                // run when clieked in confirm and promise is resolved...
+                  // run when clieked in confirm and promise is resolved...
             }}
             onError={error => {
                 // run when promise rejected...

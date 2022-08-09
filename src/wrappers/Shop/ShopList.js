@@ -8,24 +8,24 @@ import ProductListFirstRow from '../../component/Product/ProductListFirstRow';
 import ProductThreeRow from '../../component/Product/ProductThreeRow';
 import DataContext from '../../context/DataContext';
 import Pagination from '@mui/material/Pagination';
-
+import SnackBars from '../../component/Snackbar/SnackBars';
+import endpoint from '../../api/endpoint';
 
 const ShopList = () => {
 
     const [listPrice, setListPrice] = useState('');
-
-    const {reData} = useContext(DataContext);
-
+    const {reData , listWishList , setListWishList , listCompare , setListCompare} = useContext(DataContext);
     const [loadData , setLoadData] = useState([]);
-
     const [value, setValue] = useState([20, 37]);
-
     const [dataSuccess , setDataSuccess] = useState(false);
-
     const [gridRow , setGridRow] = useState(true);
-
     const pages = Math.ceil(reData.length / 10);
-
+    const [openAlert, setOpenAlert] = useState(false);
+    const [statuss, setStatuss] = useState(null);
+    const [textMsg, settextMsg] = useState('');
+    const [LoadAlert , setLoadAlert] = useState(false);
+    const [searchProduct , setSearchProduct] = useState('');
+    const [listCategory , setListCategory] = useState([]);
     const handleChangeSpin = (event, newValue) => {
         setValue(newValue);
       };
@@ -33,13 +33,50 @@ const ShopList = () => {
     const handleChange = (event) => {
         setListPrice(event.target.value);
     };
-
     function valuetext(value) {
         //console.log('event');
         return `${value}`;
     }
 
-    
+    useEffect(()=> {
+
+        let reqSuccess= true;
+
+        const reqData = async () => {
+
+            try {
+                const response = await endpoint.get("/getcategory");
+                if(response.status === 200 && response.statusText === "OK"){
+                    setListCategory(response.data)
+                }
+               
+                
+            } catch (error) {
+                console.error(error)
+            }
+
+
+        }
+
+        if(reqSuccess){
+
+            reqData();
+
+        }
+
+        return () => {
+
+            reqSuccess = false;
+        }
+
+
+    },[])
+
+    useEffect(() => {
+
+        setTimeout(function() {setLoadAlert(false); }, 3000);
+
+    },[LoadAlert])
 
     useEffect(()=> {
 
@@ -69,7 +106,6 @@ const ShopList = () => {
 
             
              setDataSuccess(false);
-
              const dataPerpage = reData.filter((items) => items.page === value)
              console.log(dataPerpage)
              setLoadData(dataPerpage)
@@ -77,24 +113,19 @@ const ShopList = () => {
      }
     const clkPage = () => {
 
-        
         window.scrollTo({top:10 , behavior: 'smooth'}) 
-        
         console.log("clk page")
-
     }
     const rowGridThree = () => {
 
         console.log('rowGridThree')
         setGridRow(false);
-
-    }
+     }
 
     const rowGridone = () => {
 
         console.log('rowGridone')
         setGridRow(true);
-        
     }
 
    return (
@@ -110,6 +141,8 @@ const ShopList = () => {
                                     InputProps={{
                                         endAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
                                     }}
+                                    value={searchProduct}
+                                    onChange={(e) => setSearchProduct(e.target.value)}
                                     variant="outlined"
                                     size="small"
                                     />
@@ -124,26 +157,24 @@ const ShopList = () => {
                              <Stack direction="row" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
                              <TextField label="ราคาต่ำสุด" color="primary" size="small" value={value[0]} />
                              <TextField label="ราคาสูงสุด" color="primary" size="small" value={value[1]} />
-                          
-                           
+                              {console.log(value)}       
                             </Stack>
                             <Typography variant='p'>ประเภทสินค้า</Typography>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                                <FormControlLabel control={<Checkbox  />} label="Label" />
-                                <FormControlLabel control={<Checkbox  />} label="Label" />
-                                <FormControlLabel control={<Checkbox  />} label="Label" />
-                               
-                            </FormGroup>
-                            <Typography variant='p'>ชนิดสินค้า</Typography>
-                            <FormGroup>
-                                <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                                <FormControlLabel control={<Checkbox  />} label="Label" />
-                                <FormControlLabel control={<Checkbox  />} label="Label" />
-                                <FormControlLabel control={<Checkbox  />} label="Label" />
-                             </FormGroup>
-                             
-                       </Stack>
+                                <FormGroup>
+                                    {
+                                        listCategory.length > 0 ?
+                                        listCategory.map((data , keys) => {
+
+                                           return (<FormControlLabel key={keys} control={<Checkbox />} label={data.catename} />)
+
+
+                                        })
+
+                                        :  <Typography variant='p'>ไม่มีข้อมูล</Typography>
+
+                                    }
+                                </FormGroup>
+                         </Stack>
                        
                  </Grid>
                  <Grid item xs={12} md={9}>
@@ -178,7 +209,7 @@ const ShopList = () => {
                              </Box>
                              
                         </Stack>
-                        
+                  
                         {
                             dataSuccess ? 
 
@@ -187,7 +218,18 @@ const ShopList = () => {
                                     loadData.slice(0,10).map((lProduct , index) => {
 
 
-                                        return (<ProductListFirstRow key={index} data={lProduct} />)
+                                        return (<ProductListFirstRow 
+                                                    key={index} 
+                                                    data={lProduct} 
+                                                    listWishList={listWishList}
+                                                    setListWishList={setListWishList}
+                                                    listCompare={listCompare}
+                                                    setListCompare={setListCompare}
+                                                    setOpenAlert={setOpenAlert}
+                                                    setStatuss={setStatuss}
+                                                    settextMsg={settextMsg}
+                                                    setLoadAlert={setLoadAlert}
+                                                />)
 
 
                                     })
@@ -199,7 +241,7 @@ const ShopList = () => {
                                             loadData.slice(0,10).map((lProduct , index) => {
 
 
-                                                return ( <ProductThreeRow data={lProduct} />)
+                                                return ( <ProductThreeRow key={index} data={lProduct} />)
 
 
                                             })
@@ -219,7 +261,9 @@ const ShopList = () => {
 
            </Grid>
            </Container>
-           
+            {
+                LoadAlert ? <SnackBars opens={openAlert} status={statuss} textMess={textMsg} /> : null
+            }
        </Box>
   )
 }

@@ -1,6 +1,7 @@
 import { createContext , useState , useEffect , useRef } from "react";
 import { createTheme } from '@mui/material/styles';
-import listitem from '../data/product/products.json'
+import listitem from '../data/product/products.json';
+import useMediaQuery from '@mui/material/useMediaQuery';
 const DataContext = createContext({});
 
 export const DataProvider = ({children}) => { 
@@ -27,7 +28,12 @@ export const DataProvider = ({children}) => {
      const [listCartProduct , setListCartProduct] = useState(JSON.parse(localStorage.getItem('cartproduct')));
      const [listWishList , setListWishList] = useState(JSON.parse(localStorage.getItem('wishlist')));
      const [listCompare , setListCompare] = useState(JSON.parse(localStorage.getItem('compare')));
+     const [listCheckout , setListCheckout] = useState(JSON.parse(localStorage.getItem('checkout')))
      const [userLogin , setUserLogin] = useState(JSON.parse(localStorage.getItem('userlogin')))
+     const ENDPOINT_URL = "http://localhost:7000/";
+     const scaleTablet = useMediaQuery('(min-width:768px)');
+     const matches = useMediaQuery('(max-width:899px)');
+     const [prvUrl , setPrvUrl] = useState('');
      var newArr = [];
      const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -57,12 +63,18 @@ export const DataProvider = ({children}) => {
         };
 
       useEffect(() => {
-        const header = document.querySelector(".sticky-bar");
-        setHeaderTop(header.offsetTop);
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-          window.removeEventListener("scroll", handleScroll);
-        };
+        //console.log(window.location.href)
+        var spurl = window.location.href;
+        if(spurl.indexOf("backend") === -1){
+
+            const header = document.querySelector(".sticky-bar");
+            setHeaderTop(header.offsetTop);
+            window.addEventListener("scroll", handleScroll);
+            return () => {
+              window.removeEventListener("scroll", handleScroll);
+            };
+        }
+       
       }, []);
 
       useEffect(() => {
@@ -181,7 +193,7 @@ export const DataProvider = ({children}) => {
             <DataContext.Provider value={{menuBar , setMenuBar , scroll , setScroll , headerTop , setHeaderTop , sizeScreen , setSizeScreen
              ,detactMobile , setDetactMobile , pos , setPos , toggleDrawer , handleTop , myRef , items, setItems , theme , styles , setListCartProduct , 
              listCartProduct , statusDelCart , setStatusDelCart , products , setProducts , totalPrice , setTotalPrice , reData , setRedata , relateProduct , setRelateProduct ,
-             listWishList , setListWishList , listCompare , setListCompare , userLogin , setUserLogin , auth , setAuth
+             listWishList , setListWishList , listCompare , setListCompare , listCheckout , setListCheckout , userLogin , setUserLogin , auth , setAuth , ENDPOINT_URL , scaleTablet , matches , prvUrl , setPrvUrl
             }}>
                 {children}
             </DataContext.Provider>

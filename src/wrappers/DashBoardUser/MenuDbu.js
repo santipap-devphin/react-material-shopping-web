@@ -27,6 +27,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import ChatIcon from '@mui/icons-material/Chat';
 import Button from '@mui/material/Button';
 import endpoint from '../../api/endpoint'
 
@@ -63,6 +64,7 @@ const MenuDbu = () => {
         
     if(response.data.code === 1){
               setUserLogin(null);
+              
               setOpenDialog(false);
     }else if(response.status === 204){
           console.log("inin")
@@ -73,14 +75,8 @@ const MenuDbu = () => {
          setOpenDialog(false);
     }
     //setTimeout(function() {setSnackOpen(false);}, 2000);
-
-    
-
- }
-
-
-
- const handleChange = (event, newValue) => {
+}
+const handleChange = (event, newValue) => {
      console.log(newValue)
      switch(newValue) {
         case 1:
@@ -97,6 +93,9 @@ const MenuDbu = () => {
             navicate("/confirm");
           break;
         case 5:
+            navicate("/chatuser");
+          break;
+        case 6:
             setOpenDialog(true);
           break;
         default:
@@ -123,6 +122,9 @@ const MenuDbu = () => {
             case "/confirm":
                 setValue(4);
             break;
+            case "/chatuser":
+                setValue(5);
+            break;
             default:
                 setValue(0);
           }
@@ -135,22 +137,24 @@ useEffect(() => {
 
     let isApiSubscribed = true;
 
-    
-    
-    if(userLogin === null){
+    if(userLogin === null && isApiSubscribed === true){
 
-         navicate("/login-register")
+         navicate("/login-register");
+         //window.location = "/login-register"
 
     }
 
     return () => {
-        // cancel the subscription
+
+        
+        /**/
+        localStorage.setItem("userlogin" , JSON.stringify(userLogin));
         isApiSubscribed = false;
     };
    
   },[userLogin])
 
-
+ 
 
 return (   <>
             {
@@ -172,6 +176,7 @@ return (   <>
                         <Tab label="เปลื่ยนรหัสผ่าน" />
                         <Tab label="รายการคำสั้งซื้อ" />
                         <Tab label="แจ้งชำระเงิน" />
+                        <Tab label="แซท" />
                         <Tab label="ออกจากระบบ" />
                       
                     </Tabs>
@@ -257,6 +262,14 @@ return (   <>
                         <ListItemText primary="แจ้งชำระเงิน" />
                     </ListItemButton>
                 </Link>
+                <Link to={"/chatuser"} style={{textDecoration: "none"}}>
+                    <ListItemButton sx={pathname === "/chatuser" ? {backgroundColor:"#202C45" , color:"#fff" , "&:hover": { backgroundColor:"#E81C2E"}} : {color:"#000"}}>
+                        <ListItemIcon>
+                            <ChatIcon sx={{color:pathname === "/chatuser" ? "#fff" :"#000"}} />
+                        </ListItemIcon>
+                        <ListItemText primary="แซทกับแอดมิน" />
+                    </ListItemButton>
+                </Link>
                 <Link to={"/history"} style={{textDecoration: "none"}}>
                 <ListItemButton sx={pathname === "/history" ? {backgroundColor:"#202C45" , color:"#fff" , "&:hover": { backgroundColor:"#E81C2E"}} : {color:"#000"}}>
                     <ListItemIcon>
@@ -268,7 +281,7 @@ return (   <>
              </List>
              <Grid container>
                 <Grid item xs={12} textAlign="center" sx={{mt:3, mb:3}}>
-                    <Logout />
+                    <Logout userLogin={userLogin} setUserLogin={setUserLogin} />
                 </Grid>
              </Grid>
             

@@ -55,7 +55,7 @@ const HeaderOtherPage = ({ScreenXl , id , open ,anchorEl , handleClose , handleC
                                    
                                    <Typography sx={{ minWidth: 80 }}><Link to="/" style={pathname === "/" ? {color:"#E81C2E",textDecoration: "none"} : {color:"#000",textDecoration: "none"}}>หน้าแรก</Link></Typography>
                                    <Typography sx={{ minWidth: 80 }}><Link to="/shop" style={pathname === "/shop"?{color:"#E81C2E",textDecoration: "none"} :{color:"#000",textDecoration: "none"}}>สินค้า</Link></Typography>
-                                   <Typography sx={{ minWidth: 80 }}>คอลเลคชั่น</Typography>
+                                   <Typography sx={{ minWidth: 80 }}><Link to="/promotion" style={pathname === "/promotion"?{color:"#E81C2E",textDecoration: "none"} :{color:"#000",textDecoration: "none"}}>โปรโมชั่น</Link></Typography>
                                    <Typography sx={{ minWidth: 80 }}><Link to="/blog" style={pathname === "/blog"?{color:"#E81C2E",textDecoration: "none"} :{color:"#000",textDecoration: "none"}}>บล็อก</Link></Typography>
                                    <Typography sx={{ minWidth: 80 }}><Link to="/contact" style={pathname === "/contact"?{color:"#E81C2E",textDecoration: "none"} :{color:"#000",textDecoration: "none"}}>ติดต่อเรา</Link></Typography>
                                </Stack>

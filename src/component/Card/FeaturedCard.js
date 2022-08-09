@@ -1,4 +1,4 @@
-import React , {useState , useEffect , useContext} from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -11,34 +11,29 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardMedia';
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import DataContext from '../../context/DataContext';
-import SnackBars from '../Snackbar/SnackBars';
 
+const FeaturedCard = ({
+              listCartProduct 
+            , setListCartProduct 
+            , listWishList 
+            , setListWishList 
+            , setLoadAlert 
+            , setOpen
+            , setStatuss
+            , settextMsg
+            , prdId 
+            , prdTitle 
+            , prdImage
+            , prdPrice 
+            , prdPriceLast 
+            , textWhite}) => {
 
-const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textWhite}) => {
-
-  const {listCartProduct , setListCartProduct , listWishList , setListWishList} =  useContext(DataContext);
-  
   // console.log(listCartProduct)
   const pages = window.location.pathname;
-
-  const [open, setOpen] = useState(false);
-
-  const [statuss, setStatuss] = useState(null);
-
-  const [textMsg, settextMsg] = useState('');
-
-  const [LoadAlert , setLoadAlert] = useState(false);
-
-  useEffect(() => {
-
-    setTimeout(function() {setLoadAlert(false); }, 2600);
-   },[LoadAlert])
 
   const haddleAddCart = () => {
 
        //console.log(listCartProduct)
-
        let findId;
 
        if(listCartProduct !== null){
@@ -51,6 +46,7 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
               setStatuss('warning');
               settextMsg(`คุณได้เพิ่มสินค้า ${prdTitle} ชิ้นนี้ไปแล้ว`);
               setLoadAlert(true);
+              setTimeout(function() {setLoadAlert(false); }, 2600);
               return;
 
               }else{
@@ -72,6 +68,7 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
                 setOpen(true);
 
                 setLoadAlert(true);
+                setTimeout(function() {setLoadAlert(false); }, 2600);
 
 
             }
@@ -96,6 +93,7 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
          setOpen(true);
 
          setLoadAlert(true);
+         setTimeout(function() {setLoadAlert(false); }, 2600);
 
        }
   }
@@ -116,6 +114,8 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
               setOpen(true);
 
               setLoadAlert(true);
+
+              setTimeout(function() {setLoadAlert(false); }, 2600);
 
               return;
 
@@ -140,6 +140,8 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
 
           setLoadAlert(true);
 
+          setTimeout(function() {setLoadAlert(false); }, 2600);
+
          }
 
        }else{
@@ -162,22 +164,11 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
 
          setLoadAlert(true);
 
+         setTimeout(function() {setLoadAlert(false); }, 2600);
+
       }
   }
-
-  useEffect(() => {
-
-     localStorage.setItem('cartproduct', JSON.stringify(listCartProduct));
-
-  },[listCartProduct])
-
-  useEffect(() => {
-
-   localStorage.setItem('wishlist', JSON.stringify(listWishList));
-
-  },[listWishList])
- 
-  return (
+ return (
     <Card sx={{ width: pages !== "/" ? 300 : 270 , height:"auto"}} style={{marginTop:"30px" ,  background: 'transparent', boxShadow: 'none'}}>
                                           <CardActionArea>
                                             <Link to={`/product/${prdId}`} style={{ textDecoration: 'none' , color:"#fff" }}>
@@ -224,19 +215,9 @@ const FeaturedCard = ({prdId ,prdTitle ,prdImage, prdPrice , prdPriceLast ,textW
                                                     </IconButton>
 
                                                   </Stack>
-
-                                                
-
-                                              </Stack>
+                                             </Stack>
                                             </CardActions>
-                                            
-                                            {
-                                              LoadAlert ? <SnackBars opens={open} status={statuss} textMess={textMsg} /> : null
-                                            }
-                                          
-                                           
-                                      
-        </Card>
+           </Card>
   )
 }
 

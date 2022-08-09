@@ -1,13 +1,14 @@
 import React , {useState} from 'react';
 import { styled } from '@mui/material/styles';
-import {Typography ,Chip, Grid , Card , CardHeader , CardMedia , CardContent , CardActions , Collapse , IconButton } from '@mui/material';
+import {Typography , Grid , Card , CardHeader , CardMedia , CardContent , CardActions , Collapse , IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 
 
-const CardOrder = ({RowsP , cardTitle , cardPrice , cardStatus}) => {
 
-    const ExpandMore = styled((props) => {
+const CardOrder = ({RowsP , cardTitle , cardImage , cardPrice , cardQty}) => {
+
+     const ExpandMore = styled((props) => {
         const { expand, ...other } = props;
         return <IconButton {...other} />;
       })(({ theme, expand }) => ({
@@ -23,26 +24,20 @@ const CardOrder = ({RowsP , cardTitle , cardPrice , cardStatus}) => {
       const handleExpandClick = () => {
             setExpanded(!expanded);
        };
+      
 
 
   return (<Grid item xs={12} md={RowsP}>
             
                 <Card>
                         <CardHeader
-                            
-                            title={cardTitle}
-                            subheader="วันสั้งซื้อ September 14, 2016"
-                            action={
-                                <Chip label={cardStatus === "success" ? "สำเร็จ" 
-                                                : cardStatus === "error" ? "ยกเลิก" 
-                                                : cardStatus === "warning" ? "กำลังจัดส่ง" : null } />
-                            }
-                        />
+                             title={cardTitle}
+                         />
                         
                         <CardMedia
                             component="img"
                             height="194"
-                            image="../../assets/img/2.jpg"
+                            image={cardImage}
                             alt="Paella dish"
                         />
                         <CardContent>
@@ -52,6 +47,22 @@ const CardOrder = ({RowsP , cardTitle , cardPrice , cardStatus}) => {
                                 </Grid>
                                 <Grid item xs={6} textAlign="right">
                                     <Typography sx={{alignItems:"right"}}>{cardPrice}</Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid container sx={{pt:1 , pb:1}}>
+                                <Grid item xs={6}>
+                                    <Typography sx={{textAlign:"left"}}>จำนวน</Typography>
+                                </Grid>
+                                <Grid item xs={6} textAlign="right">
+                                    <Typography sx={{alignItems:"right"}}>{cardQty}</Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid container sx={{pt:1 , pb:1}}>
+                                <Grid item xs={6}>
+                                    <Typography sx={{textAlign:"left"}}>ราคารวม</Typography>
+                                </Grid>
+                                <Grid item xs={6} textAlign="right">
+                                    <Typography sx={{alignItems:"right"}}>{Number(cardPrice) * Number(cardQty) }</Typography>
                                 </Grid>
                             </Grid>
                         </CardContent>

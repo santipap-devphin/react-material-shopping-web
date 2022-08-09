@@ -1,123 +1,124 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
+import  React , {useState,useEffect} from 'react';
+import Grid from "@mui/material/Grid";
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import CardMainBlog from '../../component/Card/CardMainBlog';
+import endpoint from '../../api/endpoint';
 
-const SectionRight = () => {
-    const ExpandMore = styled((props) => {
-        const { expand, ...other } = props;
-        return <IconButton {...other} />;
-      })(({ theme, expand }) => ({
-        transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shortest,
-        }),
-      }));
+const SectionRight = ({searchData}) => {
+   
+    const [listBlog , setListBlog] = useState([]);
+    const [listCate , setListCate] = useState([]);
+    const [listTag , setListTag] = useState([]);
+    const [prvListBlog , setPrvListBlog] = useState([]);
+    const [loadSucc , setLoadSucc] = useState(false);
+    const [pageAll , setPageAll] = useState(1);
+    const [nextPage , setNextPage] = useState(1);
 
-    const [expanded, setExpanded] = React.useState(false);
+    useEffect(() => {
 
-    const handleExpandClick = () => {
-            setExpanded(!expanded);
-    };
+        let callSuccess = true;
 
-  return (   
-            <Card sx={{boxShadow: "0 0px 15px 0px rgb(0 0 0 / 15%)", transformStyle: "preserve-3d"}}>
-            <CardHeader
-            avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    Ad
-                </Avatar>
+        const callData = async() => {
+
+            try {
+                const response  = await Promise.all([endpoint.get("/blogs") , endpoint.get("/getcategory") , endpoint.get("/tags")])
+                //console.log(response)
+                if(response[0].status === 200 && response[1].status === 200 && response[2].status === 200){
+                   
+                    for(var i = 0; i < response[0].data.list.length; i++){
+
+                        const pos = i+1;
+                        const page = Math.ceil(pos / 4);
+                        response[0].data.list[i]["page"] = page;
+
+                    }
+                    const sumpageAll = Math.ceil(response[0].data.list.length / 4);
+                    setPageAll(sumpageAll);
+                    setListBlog(response[0].data.list);
+                    setPrvListBlog(response[0].data.list);
+                    setListCate(response[1].data);
+                    setListTag(response[2].data.list);
+                    setLoadSucc(true);
+                }
+                
+                
+            } catch (error) {
+                console.error(error);
             }
-            action={
-                <IconButton aria-label="settings">
-                <MoreVertIcon />
-                </IconButton>
+         }
+
+         if(callSuccess){
+
+            callData();
+
+         }
+
+         return () => {
+            callSuccess = false;
+         }
+
+     },[])
+
+     useEffect(() => {
+
+        var newArr = [];
+        var num = 0;
+
+        for(const [key , val] of Object.entries(prvListBlog)){
+
+            if(val["title"].includes(searchData)){
+
+                const pos = num+1;
+                const page = Math.ceil(pos / 4);
+                val["page"] = page;
+                num++;
+                newArr.push(val);
+
             }
-            title="Admin"
-            subheader="September 14, 2016"
-            />
-            <Link to={`/blog-content/${1}`}>
-            <CardMedia
-            component="img"
-            height="194"
-            image="../../assets/img/blog-9.jpg"
-            alt="Paella dish"
-            />
-            </Link>
-            <CardContent>
-            <Link to={`/blog-content/${1}`} style={{textDecoration: "none" , color:"#000"}}><Typography variant='h6'>Lorem ipsum blog post</Typography></Link>
-            <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook
-                together with your guests. Add 1 cup of frozen peas along with the mussels,
-                if you like.
-            </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-            <IconButton aria-label="facebook">
-                <FacebookIcon sx={{color:"#3b5998"}} />
-            </IconButton>
-            <IconButton aria-label="twiter">
-                <TwitterIcon sx={{color:"#55acee"}} />
-            </IconButton>
-            <IconButton aria-label="twiter">
-                <InstagramIcon sx={{color:"#c32aa3"}} />
-            </IconButton>
-            <Typography variant='p' sx={{fontSize:24 , ml:1}}> Share</Typography>
-            <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
-            >
-                <ExpandMoreIcon />
-            </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-                <Typography paragraph>Method:</Typography>
-                <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-                aside for 10 minutes.
-                </Typography>
-                <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-                medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-                occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-                large plate and set aside, leaving chicken and chorizo in the pan. Add
-                pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-                stirring often until thickened and fragrant, about 10 minutes. Add
-                saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                </Typography>
-                <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes and
-                peppers, and cook without stirring, until most of the liquid is absorbed,
-                15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-                mussels, tucking them down into the rice, and cook again without
-                stirring, until mussels have opened and rice is just tender, 5 to 7
-                minutes more. (Discard any mussels that don&apos;t open.)
-                </Typography>
-                <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then serve.
-                </Typography>
-            </CardContent>
-            </Collapse>
-        </Card>
-    )
+        }
+
+        const pageall = Math.ceil(newArr.length / 4);
+        setPageAll(pageall);
+        setListBlog(newArr);
+     },[searchData])
+
+     const changePage = (e , value) => {
+         setNextPage(value)
+     }
+     
+    return (<>
+                <Grid item xs={12} md={9}>
+                    <Grid container spacing={6}>  
+                        {
+                            loadSucc ?
+                                listBlog.length > 0 ? 
+                                    listBlog.map((vals ,index) => {
+                                            
+                                            return vals["page"] === nextPage ? 
+                                                         <Grid key={index} item xs={12} md={6}>
+                                                            <CardMainBlog data={vals} cate={listCate} tags={listTag}  />
+                                                         </Grid>
+                                                         :null
+                                                    
+                                    })
+                                :null
+                            :null
+                        }
+                  </Grid>
+                  <Stack spacing={2} sx={{mt:5}}>
+                        {
+                            listBlog.length > 0 ?
+                                <Pagination count={pageAll} color="primary" onChange={changePage} />
+                            :<Typography>ไม่มีข้อมูล</Typography>
+                        }
+                        
+                 </Stack>
+            </Grid>
+            
+         </>
+         )
 }
 
 export default SectionRight

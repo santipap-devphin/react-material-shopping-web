@@ -1,20 +1,21 @@
-import React , { useState , useContext } from 'react';
+import React , { useState } from 'react';
 import Button from '@mui/material/Button';
+import DialogAlert from './DialogAlert';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import DataContext from '../../context/DataContext';
+import Stack from '@mui/material/Stack';
 import endpoint from '../../api/endpoint';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SweetAlertCustom from '../SweetAlert/SweetAlertCustom';
+import CircularProgress from '@mui/material/CircularProgress';
 
-const Logout = () => {
-
-  const {userLogin , setUserLogin} = useContext(DataContext);
+const Logout = ({userLogin , setUserLogin}) => {
 
   const [open, setOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
   const [alertOpen , setAlertOpen] = useState({
                                       show: false,
@@ -35,21 +36,27 @@ const Logout = () => {
 
   const allowed = async () => {
 
+        setOpen(false);
         const response = await endpoint.post("/logout"  , {username:userLogin.username} , {withCredentials:true} )
-        
         if(response.data.code === 1){
+
+               setOpenAlert(true);
+               setTimeout(function() 
+               {
+                  setOpenAlert(false);
                   setUserLogin(null);
+                }, 1500);
+              
+
         }else if(response.status === 204){
-              console.log("inin")
+              //console.log("inin")
               setAlertOpen({...alertOpen , show:true })
              
         }
         //setTimeout(function() {setSnackOpen(false);}, 2000);
 
-        setOpen(false);
-
+        
   }
-
   return (
             <div>
             <Button variant="contained" onClick={handleClickOpen}>
@@ -77,7 +84,11 @@ const Logout = () => {
                 </DialogActions>
             </Dialog>
              <SweetAlertCustom swalProps={alertOpen} setSwalProps={setAlertOpen} />
-            
+            <DialogAlert open={openAlert} setOpen={setOpenAlert} title={"กรุณารอสักครู่ กำลังออกจากระบบ"}>
+                  <Stack sx={{alignItems:"center"}}>
+                      <CircularProgress disableShrink />
+                  </Stack>   
+            </DialogAlert>
             </div>
   )
 }

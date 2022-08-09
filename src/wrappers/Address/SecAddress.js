@@ -229,8 +229,8 @@ const SecAddress = () => {
             var keyA = a.active;
             //var keyB = b.active;
             
-            if (keyA === true) return -1; // ขยับตำแหน่งขึ้นมา 1 ลำดับ
-            if (keyA === false) return 1; // อยู่ที่เดิม
+            if (keyA === true) return -1; // ขยับตำแหน่งถอย 1 ลำดับ
+            if (keyA === false) return 1; // ขยับตำแหน่งขึ้นมา 1 ลำดับ
             return 0;
           });
           //console.log(response.data.data.address)

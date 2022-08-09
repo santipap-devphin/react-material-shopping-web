@@ -1,4 +1,4 @@
-import React  , {useState ,useEffect , useContext} from 'react';
+import React  , {useState , useContext} from 'react';
 import DataContext from '../../context/DataContext';
 import {Typography ,Button ,IconButton , Grid , Popover , CardActionArea , Divider , Stack} from "@mui/material";
 import { Link } from 'react-router-dom';
@@ -10,8 +10,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 const PopOverCart = ({id , open , anchorEl , handleClose}) => {
    
-
-  const {listCartProduct , setListCartProduct ,setStatusDelCart} = useContext(DataContext);
+  const {listCartProduct , setListCartProduct ,setStatusDelCart , listCheckout} = useContext(DataContext);
 
   const [openAlertDel, setOpenAlertDel] = useState(false);
 
@@ -30,13 +29,11 @@ const PopOverCart = ({id , open , anchorEl , handleClose}) => {
 
     setOpenAlertDel(false);
   };
+  const handleDelProduct = (id , name) => {
 
+        //console.log("inin");
 
- const handleDelProduct = (id , name) => {
-
-        console.log("inin");
-
-        console.log(id)
+        //console.log(id)
 
         const pfileter = listCartProduct.filter((listPro => listPro.prdId !== id))
 
@@ -141,12 +138,17 @@ const PopOverCart = ({id , open , anchorEl , handleClose}) => {
                                                 {sum}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} md={12}>
+                            <Grid item xs={12} md={12} sx={{pb:listCheckout === null ? 3 : 0}}>
                             <Link to="/cart" style={{textDecoration: "none" }}><Button color="primary" variant="outlined" size="large" sx={{color:"#fdbe33" , borderColor:"#1f1f2e"}} fullWidth>VIEW CART</Button></Link>
                             </Grid>
-                            <Grid item xs={12} md={12} sx={{pb:3}}>
-                            <Link to="/checkout" style={{textDecoration: "none" }}> <Button color="primary" variant="outlined" size="large" sx={{color:"#fdbe33" , borderColor:"#1f1f2e"}} fullWidth>CHECK OUT</Button></Link>
-                            </Grid>
+                            {
+                                listCheckout !== null ?
+                                <Grid item xs={12} md={12} sx={{pb:3}}>
+                                    <Link to="/checkout" style={{textDecoration: "none" }}> <Button color="primary" variant="outlined" size="large" sx={{color:"#fdbe33" , borderColor:"#1f1f2e"}} fullWidth>CHECK OUT</Button></Link>
+                                </Grid>
+                                :null
+                            }
+                            
                         </Grid>
                     </Card>
             </Popover>

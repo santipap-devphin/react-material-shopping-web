@@ -15,8 +15,10 @@ import JoinWithUs from "../wrappers/Home/JoinWithUs";
 import ProductFooter from "../wrappers/Home/ProductFooter";
 import Swipers from "../component/Swiper/Swipers";
 import FeaturedCard from "../component/Card/FeaturedCard";
+import SnackBars from "../component/Snackbar/SnackBars";
 import Footer from "../layout/Footer";
-
+import imgprotest from './../assets/imgprotest.png';
+import imgback from './../assets/imgtestback.jpg';
 
 const Home = () => {
 
@@ -25,6 +27,7 @@ const Home = () => {
           , headerTop 
           , pos , toggleDrawer , handleTop , myRef
           , items, setItems , theme , styles  
+          , listCartProduct , setListCartProduct, listWishList , setListWishList
     } = useContext(DataContext)
 
     const [showItem , setShowItem] = useState(listitem[0].new);
@@ -32,6 +35,14 @@ const Home = () => {
     const menuId = 'primary-search-account-menu';
 
     const [activeTabs , setActiveTabs] = useState({active:0});
+    
+    const [LoadAlert , setLoadAlert] = useState(false);
+
+    const [open, setOpen] = useState(false);
+
+    const [statuss, setStatuss] = useState(null);
+
+    const [textMsg, settextMsg] = useState('');
 
     const [changeStyleTab , setChangeStyleTab] = useState([
       {
@@ -90,9 +101,20 @@ const Home = () => {
     };
     useEffect(() => {
 
-      //console.log(activeTabs)
-      document.getElementById("tab-"+activeTabs.active).setAttribute("style", "font-weight:800"); 
+        document.getElementById("tab-"+activeTabs.active).setAttribute("style", "font-weight:800"); 
+
     },[activeTabs])
+    useEffect(() => {
+
+      localStorage.setItem('cartproduct', JSON.stringify(listCartProduct));
+ 
+   },[listCartProduct])
+ 
+   useEffect(() => {
+ 
+    localStorage.setItem('wishlist', JSON.stringify(listWishList));
+ 
+   },[listWishList])
 
     return (
     <ThemeProvider theme={theme}>
@@ -144,8 +166,23 @@ const Home = () => {
                   <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="center" alignItems="center" spacing={{ xs: 3, sm: 2, md: 4 }}>
 
                              {showItem.map((vals, i) => {
-
-                                   return <FeaturedCard key={i} prdId ={vals.id} prdTitle ={vals.productTitle} prdImage ={vals.image} prdPrice ={vals.productPrice} prdPriceLast={vals.productPriceLast} textWhite={styles.textWhite} />
+                                   
+                                   return <FeaturedCard 
+                                                key={i} 
+                                                listCartProduct={listCartProduct} 
+                                                setListCartProduct={setListCartProduct} 
+                                                listWishList = {listWishList} 
+                                                setListWishList={setListWishList} 
+                                                setLoadAlert={setLoadAlert}
+                                                setOpen={setOpen}
+                                                setStatuss={setStatuss}
+                                                settextMsg={settextMsg}
+                                                prdId = {vals.id} 
+                                                prdTitle ={vals.productTitle} 
+                                                prdImage ={vals.image} 
+                                                prdPrice ={vals.productPrice} 
+                                                prdPriceLast={vals.productPriceLast} 
+                                                textWhite={styles.textWhite} />
 
                                 }
                                   
@@ -179,6 +216,9 @@ const Home = () => {
 
                  </Paper>
           </Box>
+          {
+            LoadAlert ? <SnackBars opens={open} status={statuss} textMess={textMsg} /> : null
+          }
           </section>
            <Footer bgStyle={styles.bgFooter} />
          </Grid>

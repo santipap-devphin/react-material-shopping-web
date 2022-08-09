@@ -79,6 +79,9 @@ const Footer = ({bgStyle}) => {
                                                                         fullWidth
                                                                         label="กรอกอีเมล์ของคุณ"
                                                                         id="outlined-start-adornment"
+                                                                        variant="outlined"
+                                                                      
+                                                                        sx={{ input: { color: 'white' } }}
                                                                         /*color="warning"*/
                                                                         InputLabelProps={{
                                                                             style: { color: '#fff'},

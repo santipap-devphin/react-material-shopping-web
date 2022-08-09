@@ -1,35 +1,14 @@
-import React , {useState , useContext , useEffect} from 'react';
-import DataContext from '../../context/DataContext';
+import React from 'react';
 import {Grid , Stack ,Typography ,Button , IconButton} from "@mui/material";
 import { Link , useNavigate  } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import SnackBars from '../Snackbar/SnackBars';
 
+const ProductListFirstRow = ({data , listWishList , setListWishList , listCompare , setListCompare, setOpenAlert , setStatuss , settextMsg , setLoadAlert}) => {
 
-const ProductListFirstRow = ({data}) => {
-
-    //console.log(data)
-
-    const {listWishList , setListWishList , listCompare , setListCompare} = useContext(DataContext);
-
-    const [openAlert, setOpenAlert] = useState(false);
-
-    const [statuss, setStatuss] = useState(null);
-
-    const [textMsg, settextMsg] = useState('');
-
-    const [LoadAlert , setLoadAlert] = useState(false);
-
-    useEffect(() => {
-
-    setTimeout(function() {setLoadAlert(false); }, 3000);
-   },[LoadAlert])
-    
     let navigate = useNavigate();
 
     const haddleUrl = (id) => {
@@ -77,11 +56,7 @@ const ProductListFirstRow = ({data}) => {
                 console.log('favorite' , data)
 
             }
-
-            
-
-
-        }else{
+         }else{
 
                 newObj = {
 
@@ -208,9 +183,7 @@ const ProductListFirstRow = ({data}) => {
                         </Stack>
                     </Grid>
             </Grid>
-            {
-                LoadAlert ? <SnackBars opens={openAlert} status={statuss} textMess={textMsg} /> : null
-            }
+           
         </Stack>
   )
 }
